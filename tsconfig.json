@@ -23,8 +23,11 @@
       }
     ],
     "paths": {
+      "@membego/ui/*": [
+        "./packages/ui/src/*"
+      ],
       "@/components/ui/*": [
-        "./node_modules/@membego/ui/src/ui/*"
+        "./packages/ui/src/ui/*"
       ],
       "@/*": [
         "./src/*"
