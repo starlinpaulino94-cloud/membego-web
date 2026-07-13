@@ -12,7 +12,8 @@ const LINKS = [
   { href: '/empresas', label: 'Explorar empresas' },
   { href: '/promociones', label: 'Promociones' },
   { href: '/caracteristicas', label: 'Características' },
-  { href: '/registro-empresa', label: 'Para empresas' },
+  // El alta de empresa vive en el app (escribe en BD); enlace cross-dominio.
+  { href: appUrlFor('/registro-empresa'), label: 'Para empresas' },
 ]
 
 export function PublicNav() {

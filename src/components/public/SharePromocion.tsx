@@ -2,25 +2,22 @@
 
 import { recordPromotionShare } from '@/modules/marketplace/actions'
 import { landingUrlFor } from '@/lib/site'
-import { ShareMenu } from './ShareMenu'
+import { ShareButton } from './ShareButton'
 
-interface SharePromocionMenuProps {
+interface SharePromocionProps {
   promocionId: string
   titulo: string
   companyName: string
 }
 
-/**
- * Fase E8 · Compartir una promoción (acción primaria) registrando el contador
- * de compartidas. Delega la UI en el menú genérico `ShareMenu`.
- */
-export function SharePromocionMenu({
+/** Compartir una promoción registrando el contador de compartidas. */
+export function SharePromocion({
   promocionId,
   titulo,
   companyName,
-}: SharePromocionMenuProps) {
+}: SharePromocionProps) {
   return (
-    <ShareMenu
+    <ShareButton
       title={titulo}
       text={`${titulo} — promoción de ${companyName} en MembeGo.`}
       path={landingUrlFor(`/promocion/${promocionId}`)}

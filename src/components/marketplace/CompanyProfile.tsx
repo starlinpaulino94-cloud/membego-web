@@ -1,4 +1,3 @@
-import { appUrlFor } from '@/lib/site'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -35,6 +34,7 @@ import type {
 } from '@/modules/marketplace/types'
 import type { RegionalPrefs } from '@/lib/format'
 import { formatMoney } from '@/lib/format'
+import { landingUrlFor } from '@/lib/site'
 
 const TIPO_LABEL: Record<string, string> = {
   carwash: 'Car Wash',
@@ -81,10 +81,11 @@ export function CompanyProfile({
   const backHref = isApp ? '/cliente/empresas' : '/empresas'
   const discoverHref = isApp ? '/cliente/explorar' : '/empresas'
   const promoHrefBase = isApp ? '/cliente/promociones' : '/promocion'
-  const registroHref = appUrlFor(`/registro/${company.slug}`)
-  // La URL para compartir siempre es la pública (para que el destinatario, que
-  // puede no tener sesión, la pueda abrir).
+  const registroHref = `/registro/${company.slug}`
+  // La URL para compartir siempre es la pública, en el dominio de la landing
+  // (para que el destinatario, que puede no tener sesión, la pueda abrir).
   const sharePath = `/empresas/${company.slug}`
+  const shareUrl = landingUrlFor(sharePath)
   const followRedirect = isApp
     ? `/cliente/empresas/${company.slug}`
     : sharePath
@@ -249,7 +250,7 @@ export function CompanyProfile({
               <ShareButton
                 title={company.name}
                 text={`Descubre ${company.name} en MembeGo: membresías, promociones y beneficios.`}
-                path={sharePath}
+                path={shareUrl}
               />
             </div>
           </div>
@@ -420,6 +421,7 @@ export function CompanyProfile({
                 isLoading={false}
                 variant="default"
                 hrefBase={promoHrefBase}
+                exploreHref={discoverHref}
               />
             </div>
           </section>

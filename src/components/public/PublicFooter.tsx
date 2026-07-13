@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { appUrlFor } from '@/lib/site'
 
 const COLUMNAS = [
   {
@@ -14,9 +15,10 @@ const COLUMNAS = [
   {
     titulo: 'Para empresas',
     links: [
-      { href: '/registro-empresa', label: 'Registrar mi empresa' },
+      // Alta de empresa e ingreso viven en el app (cross-dominio).
+      { href: appUrlFor('/registro-empresa'), label: 'Registrar mi empresa' },
       { href: '/empresas', label: 'Ver empresas' },
-      { href: '/login', label: 'Ingresar' },
+      { href: appUrlFor('/login'), label: 'Ingresar' },
     ],
   },
   {

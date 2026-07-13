@@ -12,7 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Prioridad alta: home + marketplace. Media: marketing. Baja: legal.
   const alta = ['', '/empresas', '/promociones']
-  const media = ['/caracteristicas', '/registro-empresa', '/faq', '/descargar', '/blog', '/contact']
+  // El alta de empresa (/registro-empresa) vive en el app, no en la landing.
+  const media = ['/caracteristicas', '/faq', '/descargar', '/blog', '/contact']
   const baja = ['/terms', '/privacy']
 
   const build = (paths: string[], priority: number) =>

@@ -1,39 +1,19 @@
 import type { MetadataRoute } from 'next'
-import { getAppUrl } from '@/lib/site'
+import { landingUrl } from '@/lib/site'
 
 /**
- * Robots de MembeGo: permite indexar la Landing y el marketplace público,
- * bloquea explícitamente los paneles privados y rutas de aplicación. Enlaza el
- * sitemap. (Preparado para la separación Landing/App: cuando existan dominios
- * separados, cada proyecto expone su propio robots.)
+ * Robots de la LANDING de MembeGo (membego-web): todo su contenido es público
+ * e indexable (marketing + marketplace). Los paneles privados y las rutas de
+ * aplicación (/login, /admin, /cliente…) viven en el app (membego-app), que
+ * expone su propio robots con Disallow. Enlaza el sitemap.
  */
 export default function robots(): MetadataRoute.Robots {
-  const base = getAppUrl()
+  const base = landingUrl()
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/admin',
-          '/superadmin',
-          '/cliente',
-          '/empleado',
-          '/onboarding',
-          '/api',
-          '/monitoring',
-          '/login',
-          '/acceso',
-          '/recuperar',
-          '/actualizar-password',
-          '/confirmar',
-          '/auth',
-          '/r/',
-          '/i/',
-          '/invitacion',
-          '/mis-membresias',
-          '/membresia',
-        ],
       },
     ],
     sitemap: `${base}/sitemap.xml`,
