@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { empresasVisibles } from '@/lib/empresas-visibles'
 import type {
   CompanyPublic,
   PromotionPublic,
@@ -25,11 +26,13 @@ export async function getCompaniesPublic(filters: MarketplaceFilters = {}): Prom
     offset = 0,
   } = filters
 
+  const visibles = empresasVisibles()
   try {
     const companies = await prisma.company.findMany({
       where: {
         isPublished: true,
         isActive: true,
+        ...(visibles && { slug: { in: visibles } }),
         ...(search && {
           OR: [
             { name: { contains: search, mode: 'insensitive' } },
@@ -182,6 +185,7 @@ export async function getPromotionsPublic(filters: PromotionFilters = {}): Promi
         company: {
           isPublished: true,
           isActive: true,
+          ...(empresasVisibles() ? { slug: { in: empresasVisibles()! } } : {}),
           ...(company && { slug: company }),
         },
         ...(search && {
@@ -312,6 +316,7 @@ export async function getFeaturedPromotions(limit: number = 6): Promise<Promotio
         company: {
           isPublished: true,
           isActive: true,
+          ...(empresasVisibles() ? { slug: { in: empresasVisibles()! } } : {}),
         },
       },
       select: {
@@ -571,6 +576,9 @@ export async function getPlanOg(planId: string): Promise<PlanOg | null> {
 }
 
 export async function getCategoriesPublic(): Promise<CategoryPublic[]> {
+  // Lanzamiento gradual: con lista de empresas visibles activa, las
+  // categorías se ocultan (con 1-2 empresas no aportan nada).
+  if (empresasVisibles()) return []
   try {
     const categories = await prisma.businessCategory.findMany({
       where: { active: true },

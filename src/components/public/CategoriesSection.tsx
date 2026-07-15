@@ -7,6 +7,7 @@ interface CategoriesSectionProps {
 }
 
 export function CategoriesSection({ categories }: CategoriesSectionProps) {
+  if (!categories || categories.length === 0) return null
   if (categories.length === 0) return null
 
   return (
